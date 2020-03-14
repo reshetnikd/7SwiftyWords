@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     
     var activatedButtons = [UIButton]()
     var solutions = [String]()
+    var correctAnswers = 0
     
     var level = 1
     var score = 0 {
@@ -180,13 +181,19 @@ class ViewController: UIViewController {
             answersLabel.text = splitAnswers?.joined(separator: "\n")
             
             currentAnswer.text = ""
-            score += 1
+            score += 3
+            correctAnswers += 1
             
-            if score % 7 == 0 {
+            if correctAnswers % 7 == 0 {
                 let ac = UIAlertController(title: "Well done!", message: "Are you ready for the next level?", preferredStyle: .alert)
                 ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
                 present(ac, animated: true)
             }
+        } else {
+            let ac = UIAlertController(title: "Wrong!", message: "Your guess is incorrect, please try again", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "OK", style: .default))
+            present(ac, animated: true)
+            score -= 1
         }
     }
     
